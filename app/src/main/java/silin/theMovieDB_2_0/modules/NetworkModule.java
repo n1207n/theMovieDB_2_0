@@ -11,12 +11,17 @@ import com.ryanharter.auto.value.moshi.AutoValueMoshiAdapterFactory;
 import com.squareup.moshi.Moshi;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -47,6 +52,22 @@ public class NetworkModule {
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .addNetworkInterceptor(new StethoInterceptor())
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request originalRequest = chain.request();
+
+                        Request requestWithCache = originalRequest.newBuilder()
+                                .header("Content-Type", "application/json")
+                                .header("Cache-Control", "public, max-age=21600")
+                                .build();
+
+                        Response response = chain.proceed(requestWithCache);
+                        response.cacheResponse();
+
+                        return response;
+                    }
+                })
                 .cache(cache).build();
     }
 
