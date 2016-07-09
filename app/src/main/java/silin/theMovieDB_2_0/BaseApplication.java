@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 
 import autodagger.AutoComponent;
 import autodagger.AutoInjector;
-import silin.theMovieDB_2_0.modules.ContextModule;
+import silin.theMovieDB_2_0.modules.AndroidModule;
 import silin.theMovieDB_2_0.modules.EnvironmentModule;
 import silin.theMovieDB_2_0.modules.NetworkModule;
 import silin.theMovieDB_2_0.modules.SharedPrefModule;
@@ -19,7 +19,7 @@ import silin.theMovieDB_2_0.modules.SharedPrefModule;
  */
 @AutoComponent(
         modules = {
-                ContextModule.class,
+                AndroidModule.class,
                 EnvironmentModule.class,
                 NetworkModule.class,
                 SharedPrefModule.class
@@ -34,7 +34,7 @@ public class BaseApplication extends Application {
     // Component for mocking any dependencies in testing
     private BaseApplicationComponent mBaseApplicationComponent;
 
-    public static BaseApplication sharedApplication() {
+    static BaseApplication sharedApplication() {
         return sBaseApplication;
     }
 

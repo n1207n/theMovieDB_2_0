@@ -1,5 +1,6 @@
 package silin.theMovieDB_2_0.modules;
 
+import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
@@ -12,10 +13,12 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
+import silin.theMovieDB_2_0.BuildConfig;
 import silin.theMovieDB_2_0.IEnvironment;
 
 /**
@@ -23,24 +26,28 @@ import silin.theMovieDB_2_0.IEnvironment;
  */
 @Module
 public class NetworkModule {
-    String mAPIBaseUrl;
+    @Provides
+    @Singleton
+    Cache providesCache(@NonNull final Application application) {
+        int cacheSize = 10 * 1024 * 1024; // 10 MiB
 
-    public NetworkModule(String APIBaseUrl) {
-        this.mAPIBaseUrl = APIBaseUrl;
+        return new Cache(application.getCacheDir(), cacheSize);
     }
 
     @Provides
     @Singleton
-    public OkHttpClient providesOkHttpClient(@NonNull final IEnvironment environment) {
+    OkHttpClient providesOkHttpClient(@NonNull final IEnvironment environment, @NonNull Cache cache) {
         final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(environment.getHttpLoggingLevel());
 
-        return new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        return new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .cache(cache).build();
     }
 
     @Provides
     @Singleton
-    public Merlin providesMerlin(@NonNull final Context context) {
+    Merlin providesMerlin(@NonNull final Context context) {
         return new Merlin.Builder()
                 .withConnectableCallbacks()
                 .withDisconnectableCallbacks()
@@ -51,13 +58,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public MerlinsBeard providesMerlinBeard(@NonNull final Context context) {
+    MerlinsBeard providesMerlinBeard(@NonNull final Context context) {
         return MerlinsBeard.from(context);
     }
 
     @Provides
     @Singleton
-    public Picasso providesPicasso(@NonNull final Context context) {
+    Picasso providesPicasso(@NonNull final Context context) {
         final Picasso picasso = Picasso.with(context);
         picasso.setIndicatorsEnabled(true);
         picasso.setLoggingEnabled(true);
@@ -66,15 +73,15 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public Moshi providesMoshi() {
+    Moshi providesMoshi() {
         return new Moshi.Builder().build();
     }
 
     @Provides
     @Singleton
-    public Retrofit providesRetrofit(@NonNull final Moshi moshi, @NonNull final OkHttpClient okHttpClient) {
+    Retrofit providesRetrofit(@NonNull final Moshi moshi, @NonNull final OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(mAPIBaseUrl)
+                .baseUrl(BuildConfig.API_BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .client(okHttpClient)
                 .build();
