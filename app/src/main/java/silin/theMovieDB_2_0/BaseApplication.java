@@ -62,6 +62,7 @@ public class BaseApplication extends Application {
 
     private void buildComponents() {
         mBaseApplicationComponent = DaggerBaseApplicationComponent.builder()
+                .androidModule(new AndroidModule(sBaseApplication))
                 .build();
     }
 }
