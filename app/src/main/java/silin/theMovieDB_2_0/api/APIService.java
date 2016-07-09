@@ -13,6 +13,8 @@ import silin.theMovieDB_2_0.models.MovieTrailerList;
 
 /**
  * Created on 7/8/16: theMovieDB_2_0 by @n1207n
+ *
+ * Credit goes to https://github.com/ennur/Clean-Android-Code! Thanks!
  */
 
 public class APIService {
