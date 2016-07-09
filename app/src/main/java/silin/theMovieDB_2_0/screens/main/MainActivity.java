@@ -1,4 +1,4 @@
-package silin.theMovieDB_2_0;
+package silin.theMovieDB_2_0.screens.main;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,9 +8,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import autodagger.AutoInjector;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import silin.theMovieDB_2_0.BaseApplication;
+import silin.theMovieDB_2_0.R;
+import silin.theMovieDB_2_0.models.MovieList;
 
 @AutoInjector(BaseApplication.class)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainView {
+
+    @BindView(R.id.toolbar)
+    private Toolbar toolbar;
+
+    @BindView(R.id.fab)
+    private FloatingActionButton fab;
+
+    private MainPresenter mainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +33,16 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mainPresenter = new MainPresenter(this);
+
+        initializeViews();
+    }
+
+    private void initializeViews() {
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,4 +52,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showLoadingMovieListError(String errorMessage) {
+
+    }
+
+    @Override
+    public void showMovieList(MovieList movieList) {
+
+    }
 }

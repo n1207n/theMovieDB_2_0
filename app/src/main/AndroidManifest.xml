@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <!-- Change the theme to AppTheme.BrandSplashTheme if you want to use Brand splash screen -->
         <activity
-            android:name=".MainActivity"
+            android:name=".screens.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

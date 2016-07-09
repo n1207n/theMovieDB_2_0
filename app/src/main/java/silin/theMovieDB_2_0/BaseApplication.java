@@ -34,7 +34,7 @@ public class BaseApplication extends Application {
     // Component for mocking any dependencies in testing
     private BaseApplicationComponent mBaseApplicationComponent;
 
-    static BaseApplication sharedApplication() {
+    public static BaseApplication sharedApplication() {
         return sBaseApplication;
     }
 
@@ -56,7 +56,7 @@ public class BaseApplication extends Application {
         sBaseApplication = null;
     }
 
-    BaseApplicationComponent getComponentApplication() {
+    public BaseApplicationComponent getComponentApplication() {
         return mBaseApplicationComponent;
     }
 
