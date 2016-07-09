@@ -1,0 +1,5 @@
+/build
+*.keystore
+keys.xml
+google-services.json
+keystore.properties
