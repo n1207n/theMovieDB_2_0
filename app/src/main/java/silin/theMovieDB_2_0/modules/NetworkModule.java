@@ -4,8 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
+import com.ryanharter.auto.value.moshi.AutoValueMoshiAdapterFactory;
 import com.squareup.moshi.Moshi;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +44,7 @@ public class NetworkModule {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .cache(cache).build();
     }
 
@@ -74,7 +77,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     Moshi providesMoshi() {
-        return new Moshi.Builder().build();
+        return new Moshi.Builder().add(new AutoValueMoshiAdapterFactory()).build();
     }
 
     @Provides
