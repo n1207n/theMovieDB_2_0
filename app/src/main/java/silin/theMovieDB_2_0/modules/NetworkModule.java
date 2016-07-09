@@ -29,6 +29,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 import rx.schedulers.Schedulers;
 import silin.theMovieDB_2_0.BuildConfig;
 import silin.theMovieDB_2_0.IEnvironment;
+import silin.theMovieDB_2_0.api.APIService;
+import silin.theMovieDB_2_0.api.NetworkService;
 
 /**
  * Created on 7/4/16: theMovieDB_2_0
@@ -112,5 +114,17 @@ public class NetworkModule {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .client(okHttpClient)
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    NetworkService providesNetworkInterface(@NonNull final Retrofit retrofit) {
+        return retrofit.create(NetworkService.class);
+    }
+
+    @Provides
+    @Singleton
+    APIService providesAPIService(@NonNull final NetworkService networkService) {
+        return new APIService(networkService);
     }
 }
