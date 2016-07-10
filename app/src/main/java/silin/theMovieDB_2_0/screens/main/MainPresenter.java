@@ -1,5 +1,7 @@
 package silin.theMovieDB_2_0.screens.main;
 
+import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
+
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
@@ -14,43 +16,43 @@ import silin.theMovieDB_2_0.models.MovieList;
  * Created on 7/9/16: theMovieDB_2_0 by @n1207n
  */
 @AutoInjector(BaseApplication.class)
-public class MainPresenter {
+public class MainPresenter extends MvpBasePresenter<MainView> {
     @Inject
-    APIService apiService;
+    APIService mApiService;
 
-    private final CompositeSubscription compositeSubscription;
+    private CompositeSubscription mCompositeSubscription;
 
-    private final MainView mainView;
-
-    public MainPresenter(MainView mainView) {
-        this.mainView = mainView;
-
-        compositeSubscription = new CompositeSubscription();
+    MainPresenter() {
+        BaseApplication.sharedApplication().getComponentApplication().inject(this);
+        mCompositeSubscription = new CompositeSubscription();
     }
 
-    public void loadPopularMovieList() {
-        mainView.showLoading();
+    void loadPopularMovieList(final boolean pullToRefresh) {
+        if (isViewAttached()) getView().showLoading(pullToRefresh);
 
-        Subscription subscription = apiService.getPopularMovieList(new APIService.GetPopularMovieListCallback() {
+        Subscription subscription = mApiService.getPopularMovieList(new APIService.GetPopularMovieListCallback() {
             @Override
             public void onSuccess(MovieList movieList) {
-                mainView.hideLoading();
-                mainView.showMovieList(movieList);
+                if (isViewAttached()) {
+                    getView().setData(movieList.results());
+                    getView().showContent();
+                }
             }
 
             @Override
             public void onError(NetworkException exception) {
-                mainView.hideLoading();
-                mainView.showLoadingMovieListError(exception.getAppErrorMessage());
+                if (isViewAttached()) {
+                    getView().showError(exception, pullToRefresh);
+                }
             }
         });
 
-        compositeSubscription.add(subscription);
+        mCompositeSubscription.add(subscription);
     }
 
-    public void onStop() {
-        if (!compositeSubscription.isUnsubscribed()) {
-            compositeSubscription.unsubscribe();
+    void onStop() {
+        if (!mCompositeSubscription.isUnsubscribed()) {
+            mCompositeSubscription.unsubscribe();
         }
     }
 }

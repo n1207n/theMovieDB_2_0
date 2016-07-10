@@ -1,17 +1,28 @@
 package silin.theMovieDB_2_0.screens.main;
 
-import silin.theMovieDB_2_0.models.MovieList;
+import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
+
+import java.util.List;
+
+import silin.theMovieDB_2_0.models.Movie;
 
 /**
  * Created on 7/9/16: theMovieDB_2_0 by @n1207n
  */
 
-public interface MainView {
-    void showLoading();
+public interface MainView extends MvpLceView<List<Movie>> {
+    @Override
+    void showLoading(boolean pullToRefresh);
 
-    void hideLoading();
+    @Override
+    void showContent();
 
-    void showLoadingMovieListError(String errorMessage);
+    @Override
+    void showError(Throwable e, boolean pullToRefresh);
 
-    void showMovieList(MovieList movieList);
+    @Override
+    void setData(List<Movie> data);
+
+    @Override
+    void loadData(boolean pullToRefresh);
 }

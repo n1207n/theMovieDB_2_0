@@ -12,18 +12,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import silin.theMovieDB_2_0.BaseApplication;
 import silin.theMovieDB_2_0.R;
-import silin.theMovieDB_2_0.models.MovieList;
 
 @AutoInjector(BaseApplication.class)
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
-    private Toolbar toolbar;
+    Toolbar mToolbar;
 
     @BindView(R.id.fab)
-    private FloatingActionButton fab;
-
-    private MainPresenter mainPresenter;
+    FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,40 +32,18 @@ public class MainActivity extends AppCompatActivity implements MainView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mainPresenter = new MainPresenter(this);
-
         initializeViews();
     }
 
     private void initializeViews() {
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showLoadingMovieListError(String errorMessage) {
-
-    }
-
-    @Override
-    public void showMovieList(MovieList movieList) {
-
     }
 }
