@@ -90,7 +90,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
      */
     @Override
     public void onBindViewHolder(final MovieViewHolder holder, final int position) {
-        mPicasso.load(mMovieList.get(position).posterPathWidth342)
+        mPicasso.load(mMovieList.get(position).posterPathWidth342())
                 .fit()
                 .noPlaceholder()
                 .into(holder.mPosterImageView);

@@ -28,23 +28,16 @@ public abstract class MovieTrailer implements Parcelable {
 
     public abstract String type();
 
-    // Derived properties
-    public String trailerUrl;
-
     public static MovieTrailer create(String id, String iso639_1, String key, String name,
-                                      String site, String size, String type, String trailerUrl) {
-        MovieTrailer movieTrailer = new AutoValue_MovieTrailer(id, iso639_1, key, name, site, size, type);
-
-        movieTrailer.trailerUrl = trailerUrl;
-
-        return movieTrailer;
+                                      String site, String size, String type) {
+        return new AutoValue_MovieTrailer(id, iso639_1, key, name, site, size, type);
     }
 
     /*
-     Derived property creators
+     * Derived properties
      */
-    final String getTrailerUrl() {
-        return YOUTUBE_BASE_URL + trailerUrl;
+    public String getTrailerUrl() {
+        return YOUTUBE_BASE_URL + key();
     }
 
     // Moshi adapter

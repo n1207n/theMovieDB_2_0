@@ -44,77 +44,51 @@ public abstract class Movie implements Parcelable {
 
     public abstract List<Integer> genre_ids();
 
-    // Derived properties
-    public String posterPathWidth185;
-    public String posterPathWidth342;
-    public String posterPathWidth500;
-    public String posterPathWidthOriginal;
-    public String backDropPathWidth185;
-    public String backDropPathWidth342;
-    public String backDropPathWidth500;
-    public String backDropPathWidthOriginal;
-
     public static Movie create(int id, int vote_count, String poster_path, String overview,
                                String release_date, String original_title, String original_language,
                                String title, String backdrop_path, double popularity, double vote_average,
-                               boolean adult, boolean video, List<Integer> genre_ids,
-                               String posterPathWidth185, String posterPathWidth342,
-                               String posterPathWidth500, String posterPathWidthOriginal,
-                               String backDropPathWidth185, String backDropPathWidth342,
-                               String backDropPathWidth500,
-                               String backDropPathWidthOriginal) {
-        Movie movie = new AutoValue_Movie(
+                               boolean adult, boolean video, List<Integer> genre_ids) {
+
+        return new AutoValue_Movie(
                 id, vote_count, poster_path, overview, release_date,
                 original_title, original_language, title, backdrop_path,
                 popularity, vote_average, adult, video, genre_ids
         );
-
-        // Derived properties
-        movie.posterPathWidth185 = posterPathWidth185;
-        movie.posterPathWidth342 = posterPathWidth342;
-        movie.posterPathWidth500 = posterPathWidth500;
-        movie.posterPathWidthOriginal = posterPathWidthOriginal;
-        movie.backDropPathWidth185 = backDropPathWidth185;
-        movie.backDropPathWidth342 = backDropPathWidth342;
-        movie.backDropPathWidth500 = backDropPathWidth500;
-        movie.backDropPathWidthOriginal = backDropPathWidthOriginal;
-
-        return movie;
     }
 
     /*
-     Derived property creators
+     * Derived properties
      */
-    final String posterPathWidth185() {
-        return IMAGE_BASE_URL + "w185" + posterPathWidth185;
+    public String posterPathWidth185() {
+        return IMAGE_BASE_URL + "w185" + poster_path();
     }
 
-    final String posterPathWidth342() {
-        return IMAGE_BASE_URL + "w342" + posterPathWidth342;
+    public String posterPathWidth342() {
+        return IMAGE_BASE_URL + "w342" + poster_path();
     }
 
-    final String posterPathWidth500() {
-        return IMAGE_BASE_URL + "w500" + posterPathWidth500;
+    public String posterPathWidth500() {
+        return IMAGE_BASE_URL + "w500" + poster_path();
     }
 
-    final String posterPathWidthOriginal() {
-        return IMAGE_BASE_URL + "original" + posterPathWidthOriginal;
+    public String posterPathWidthOriginal() {
+        return IMAGE_BASE_URL + "original" + poster_path();
     }
 
-    final String backDropPathWidth185() {
-        return IMAGE_BASE_URL + "w185" + backDropPathWidth185;
+    public String backDropPathWidth185() {
+        return IMAGE_BASE_URL + "w185" + backdrop_path();
     }
 
-    final String backDropPathWidth342() {
-        return IMAGE_BASE_URL + "w342" + backDropPathWidth342;
+    public String backDropPathWidth342() {
+        return IMAGE_BASE_URL + "w342" + backdrop_path();
     }
 
-    final String backDropPathWidth500() {
-        return IMAGE_BASE_URL + "w500" + backDropPathWidth500;
+    public String backDropPathWidth500() {
+        return IMAGE_BASE_URL + "w500" + backdrop_path();
     }
 
-    final String backDropPathWidthOriginal() {
-        return IMAGE_BASE_URL + "original" + backDropPathWidthOriginal;
+    public String backDropPathWidthOriginal() {
+        return IMAGE_BASE_URL + "original" + backdrop_path();
     }
 
     // Moshi adapter
