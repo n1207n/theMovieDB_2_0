@@ -15,8 +15,8 @@
     </style>
 
     <style name="AppTheme.BrandSplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Create a drawable for brand splash -->
-        <!-- <item name="android:windowBackground">@drawable/drawable_brand_splash</item> -->
+        Create a drawable for brand splash
+        <item name="android:windowBackground">@drawable/drawable_brand_splash</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

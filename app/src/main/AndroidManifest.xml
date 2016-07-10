@@ -13,7 +13,7 @@
         <activity
             android:name=".screens.main.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.BrandSplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
