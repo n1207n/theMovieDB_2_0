@@ -34,6 +34,7 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
             @Override
             public void onSuccess(MovieList movieList) {
                 if (isViewAttached()) {
+                    getView().hideLoading(pullToRefresh);
                     getView().setData(movieList.results());
                     getView().showContent();
                 }
@@ -42,6 +43,7 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
             @Override
             public void onError(NetworkException exception) {
                 if (isViewAttached()) {
+                    getView().hideLoading(pullToRefresh);
                     getView().showError(exception, pullToRefresh);
                 }
             }
