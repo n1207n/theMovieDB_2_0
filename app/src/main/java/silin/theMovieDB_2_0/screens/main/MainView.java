@@ -14,6 +14,8 @@ public interface MainView extends MvpLceView<List<Movie>> {
     @Override
     void showLoading(boolean pullToRefresh);
 
+    void hideLoading(boolean pullToRefresh);
+
     @Override
     void showContent();
 

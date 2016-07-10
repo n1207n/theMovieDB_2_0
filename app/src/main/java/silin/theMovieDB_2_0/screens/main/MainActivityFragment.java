@@ -138,6 +138,11 @@ public class MainActivityFragment
     }
 
     @Override
+    public void hideLoading(boolean pullToRefresh) {
+        if (pullToRefresh) contentView.setRefreshing(false);
+    }
+
+    @Override
     public void setData(List<Movie> data) {
         mMovieAdapter.updateData((ArrayList<Movie>) data);
     }
