@@ -41,6 +41,9 @@ public class MainActivityFragment
     @Inject
     Context mContext;
 
+    @BindView(R.id.contentView)
+    SwipeRefreshLayout mRefreshLayout;
+
     @BindView(R.id.loadingView)
     ProgressBar mProgressBar;
 
@@ -93,15 +96,15 @@ public class MainActivityFragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
 
-        // Set up the refresh listener
-        contentView.setOnRefreshListener(this);
-
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Set up the refresh listener
+        contentView.setOnRefreshListener(this);
 
         // RecyclerView setup
         mMovieRecyclerView.setHasFixedSize(true);
