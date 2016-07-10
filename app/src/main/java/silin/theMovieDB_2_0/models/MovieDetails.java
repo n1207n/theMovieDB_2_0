@@ -60,27 +60,27 @@ public abstract class MovieDetails implements Parcelable {
     public abstract List<Genre> genres();
 
     // Derived properties
-    private String posterPathWidth185;
-    private String posterPathWidth342;
-    private String posterPathWidth500;
-    private String posterPathWidthOriginal;
-    private String backDropPathWidth185;
-    private String backDropPathWidth342;
-    private String backDropPathWidth500;
-    private String backDropPathWidthOriginal;
-    private String imdbPath;
+    public String posterPathWidth185;
+    public String posterPathWidth342;
+    public String posterPathWidth500;
+    public String posterPathWidthOriginal;
+    public String backDropPathWidth185;
+    public String backDropPathWidth342;
+    public String backDropPathWidth500;
+    public String backDropPathWidthOriginal;
+    public String imdbPath;
 
-    static MovieDetails create(int id, int vote_count, String poster_path, String overview,
-                               String release_date, String original_title, String original_language,
-                               String title, String backdrop_path, String homepage, String imdb_id,
-                               String status, String tagline, double popularity, double vote_average,
-                               boolean adult, boolean video, boolean budget, boolean revenue,
-                               boolean runtime, List<Genre> genres,
-                               String posterPathWidth185, String posterPathWidth342,
-                               String posterPathWidth500, String posterPathWidthOriginal,
-                               String backDropPathWidth185, String backDropPathWidth342,
-                               String backDropPathWidth500, String backDropPathWidthOriginal,
-                               String imdbPath) {
+    public static MovieDetails create(int id, int vote_count, String poster_path, String overview,
+                                      String release_date, String original_title, String original_language,
+                                      String title, String backdrop_path, String homepage, String imdb_id,
+                                      String status, String tagline, double popularity, double vote_average,
+                                      boolean adult, boolean video, boolean budget, boolean revenue,
+                                      boolean runtime, List<Genre> genres,
+                                      String posterPathWidth185, String posterPathWidth342,
+                                      String posterPathWidth500, String posterPathWidthOriginal,
+                                      String backDropPathWidth185, String backDropPathWidth342,
+                                      String backDropPathWidth500, String backDropPathWidthOriginal,
+                                      String imdbPath) {
         MovieDetails movieDetails = new AutoValue_MovieDetails(
                 id, vote_count, poster_path, overview, release_date,
                 original_title, original_language, title, backdrop_path, homepage, imdb_id,

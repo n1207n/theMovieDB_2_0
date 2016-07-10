@@ -45,24 +45,24 @@ public abstract class Movie implements Parcelable {
     public abstract List<Integer> genre_ids();
 
     // Derived properties
-    private String posterPathWidth185;
-    private String posterPathWidth342;
-    private String posterPathWidth500;
-    private String posterPathWidthOriginal;
-    private String backDropPathWidth185;
-    private String backDropPathWidth342;
-    private String backDropPathWidth500;
-    private String backDropPathWidthOriginal;
+    public String posterPathWidth185;
+    public String posterPathWidth342;
+    public String posterPathWidth500;
+    public String posterPathWidthOriginal;
+    public String backDropPathWidth185;
+    public String backDropPathWidth342;
+    public String backDropPathWidth500;
+    public String backDropPathWidthOriginal;
 
-    static Movie create(int id, int vote_count, String poster_path, String overview,
-                        String release_date, String original_title, String original_language,
-                        String title, String backdrop_path, double popularity, double vote_average,
-                        boolean adult, boolean video, List<Integer> genre_ids,
-                        String posterPathWidth185, String posterPathWidth342,
-                        String posterPathWidth500, String posterPathWidthOriginal,
-                        String backDropPathWidth185, String backDropPathWidth342,
-                        String backDropPathWidth500,
-                        String backDropPathWidthOriginal) {
+    public static Movie create(int id, int vote_count, String poster_path, String overview,
+                               String release_date, String original_title, String original_language,
+                               String title, String backdrop_path, double popularity, double vote_average,
+                               boolean adult, boolean video, List<Integer> genre_ids,
+                               String posterPathWidth185, String posterPathWidth342,
+                               String posterPathWidth500, String posterPathWidthOriginal,
+                               String backDropPathWidth185, String backDropPathWidth342,
+                               String backDropPathWidth500,
+                               String backDropPathWidthOriginal) {
         Movie movie = new AutoValue_Movie(
                 id, vote_count, poster_path, overview, release_date,
                 original_title, original_language, title, backdrop_path,

@@ -24,7 +24,7 @@ public abstract class MovieReviewList implements Parcelable {
 
     public abstract List<MovieReview> results();
 
-    static MovieReviewList create(int id, int page, int total_pages, int total_results, List<MovieReview> results) {
+    public static MovieReviewList create(int id, int page, int total_pages, int total_results, List<MovieReview> results) {
         return new AutoValue_MovieReviewList(id, page, total_pages, total_results, results);
     }
 

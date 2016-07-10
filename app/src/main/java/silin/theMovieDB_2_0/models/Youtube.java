@@ -23,9 +23,9 @@ public abstract class Youtube implements Parcelable {
     public abstract String type();
 
     // Derived properties
-    private String trailerUrl;
+    public String trailerUrl;
 
-    static Youtube create(String name, String size, String source, String type, String trailerUrl) {
+    public static Youtube create(String name, String size, String source, String type, String trailerUrl) {
         Youtube youtube = new AutoValue_Youtube(name, size, source, type);
 
         youtube.trailerUrl = trailerUrl;

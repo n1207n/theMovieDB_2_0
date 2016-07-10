@@ -18,7 +18,7 @@ public abstract class MovieTrailerList implements Parcelable {
 
     public abstract List<MovieTrailer> results();
 
-    static MovieTrailerList create(int id, List<MovieTrailer> results) {
+    public static MovieTrailerList create(int id, List<MovieTrailer> results) {
         return new AutoValue_MovieTrailerList(id, results);
     }
 

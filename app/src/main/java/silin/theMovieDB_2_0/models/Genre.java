@@ -15,7 +15,7 @@ public abstract class Genre implements Parcelable {
 
     public abstract String name();
 
-    static Genre create(int id, String name) {
+    public static Genre create(int id, String name) {
         return new AutoValue_Genre(id, name);
     }
 

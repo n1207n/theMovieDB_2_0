@@ -17,23 +17,25 @@ import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 
 /**
  * Created on 7/8/16: theMovieDB_2_0 by @n1207n
- * <p>
+ *
  * Credit goes to https://github.com/ennur/Clean-Android-Code Thanks!
  */
 @AutoInjector(BaseApplication.class)
 public class NetworkException extends Throwable {
 
     @Inject
-    Moshi moshi;
+    Moshi mMoshi;
 
-    public static final String DEFAULT_ERROR_MESSAGE = "Something went wrong! Please try again.";
-    public static final String NETWORK_ERROR_MESSAGE = "No Internet Connection!";
+    private static final String DEFAULT_ERROR_MESSAGE = "Something went wrong! Please try again.";
+    private static final String NETWORK_ERROR_MESSAGE = "No Internet Connection!";
 
     private final Throwable error;
 
     public NetworkException(Throwable e) {
         super(e);
         this.error = e;
+
+        BaseApplication.sharedApplication().getComponentApplication().inject(this);
     }
 
     public String getMessage() {
@@ -66,7 +68,7 @@ public class NetworkException extends Throwable {
     protected String getJsonStringFromResponse(final retrofit2.Response<?> response) {
         try {
             String jsonString = response.errorBody().string();
-            JsonAdapter<ErrorResponse> errorResponseJsonAdapter = ErrorResponse.jsonAdapter(moshi);
+            JsonAdapter<ErrorResponse> errorResponseJsonAdapter = ErrorResponse.jsonAdapter(mMoshi);
             ErrorResponse errorResponse = errorResponseJsonAdapter.fromJson(jsonString);
 
             return errorResponse.status_message();

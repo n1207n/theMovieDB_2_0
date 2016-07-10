@@ -20,7 +20,7 @@ public abstract class MovieReview implements Parcelable {
 
     public abstract String url();
 
-    static MovieReview create(String id, String author, String content, String url) {
+    public static MovieReview create(String id, String author, String content, String url) {
         return new AutoValue_MovieReview(id, author, content, url);
     }
 
