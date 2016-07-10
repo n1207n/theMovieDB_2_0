@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment;
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ import silin.theMovieDB_2_0.models.Movie;
  */
 @AutoInjector(BaseApplication.class)
 public class MainActivityFragment
-        extends MvpLceFragment<SwipeRefreshLayout, List<Movie>, MainView, MainPresenter>
+        extends MvpLceViewStateFragment<SwipeRefreshLayout, List<Movie>, MainView, MainPresenter>
         implements MainView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -54,11 +56,36 @@ public class MainActivityFragment
         BaseApplication.sharedApplication().getComponentApplication().inject(this);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @NonNull
     @Override
     public MainPresenter createPresenter() {
         return new MainPresenter();
     }
+
+    /*
+     * LCE ViewState setup start
+     */
+
+    @NonNull
+    @Override
+    public LceViewState<List<Movie>, MainView> createViewState() {
+        return new RetainingLceViewState<>();
+    }
+
+    @Override
+    public List<Movie> getData() {
+        return mMovieAdapter == null ? null : mMovieAdapter.getMovieList();
+    }
+
+    /*
+     LCE ViewState setup end
+     */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +114,10 @@ public class MainActivityFragment
         // Load the movie list data
         loadData(false);
     }
+
+    /*
+     LCEView methods
+     */
 
     @Override
     protected String getErrorMessage(Throwable e, boolean pullToRefresh) {

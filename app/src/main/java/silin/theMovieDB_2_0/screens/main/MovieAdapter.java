@@ -36,7 +36,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private ArrayList<Movie> mMovieList;
 
-    public MovieAdapter(ArrayList<Movie> movieList) {
+    MovieAdapter(ArrayList<Movie> movieList) {
         mMovieList = movieList;
         BaseApplication.sharedApplication().getComponentApplication().inject(this);
     }
@@ -83,8 +83,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
      * on (e.g. in a click listener), use {@link MovieViewHolder#getAdapterPosition()} which will
      * have the updated adapter position.
      * <p/>
-     * Override {@link #onBindViewHolder(MovieViewHolder, int)} instead if Adapter can
-     * handle effcient partial bind.
      *
      * @param holder   The ViewHolder which should be updated to represent the contents of the
      *                 item at the given position in the data set.
@@ -112,6 +110,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         mMovieList.clear();
         mMovieList.addAll(newList);
         notifyDataSetChanged();
+    }
+
+    ArrayList<Movie> getMovieList() {
+        return mMovieList;
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
