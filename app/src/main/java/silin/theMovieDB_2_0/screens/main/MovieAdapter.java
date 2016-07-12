@@ -1,6 +1,7 @@
 package silin.theMovieDB_2_0.screens.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import silin.theMovieDB_2_0.BaseApplication;
 import silin.theMovieDB_2_0.R;
 import silin.theMovieDB_2_0.models.Movie;
+import silin.theMovieDB_2_0.screens.details.DetailsActivityIntentBuilder;
 
 /**
  * Created on 7/9/16: theMovieDB_2_0 by @n1207n
@@ -31,12 +33,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Inject
     Picasso mPicasso;
 
-    @Inject
     Context mContext;
 
     private ArrayList<Movie> mMovieList;
 
-    MovieAdapter(ArrayList<Movie> movieList) {
+    MovieAdapter(Context context, ArrayList<Movie> movieList) {
+        mContext = context;
         mMovieList = movieList;
         BaseApplication.sharedApplication().getComponentApplication().inject(this);
     }
@@ -94,6 +96,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .fit()
                 .noPlaceholder()
                 .into(holder.mPosterImageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent detailsIntent = new DetailsActivityIntentBuilder(mMovieList.get(holder.getAdapterPosition())).build(mContext);
+                mContext.startActivity(detailsIntent);
+
+//                String sharedElementName = view.getTransitionName() + getAdapterPosition();
+//
+//                intent.putExtra(MOVIE_DETAILS_TRANSITION, sharedElementName);
+//                intent.putExtra(MOVIE_DETAILS, mMovieList.get(getAdapterPosition()));
+//
+//                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+//                        MainActivity.this
+//                        // ,view, sharedElementName
+//                ).toBundle();
+//                startActivity(intent, bundle);
+            }
+        });
     }
 
     /**
@@ -116,7 +137,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return mMovieList;
     }
 
-    class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.image_view_movie_poster)
         ImageView mPosterImageView;
@@ -124,23 +145,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         MovieViewHolder(CardView itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mPosterImageView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-//            Intent intent = new Intent(MainActivity.this, MovieDetailsActivity.class);
-//            String sharedElementName = view.getTransitionName() + getAdapterPosition();
-//
-//            intent.putExtra(MOVIE_DETAILS_TRANSITION, sharedElementName);
-//            intent.putExtra(MOVIE_DETAILS, mMovieList.get(getAdapterPosition()));
-//
-//            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
-//                    MainActivity.this
-//                    // ,view, sharedElementName
-//            ).toBundle();
-//
-//            startActivity(intent, bundle);
         }
     }
 }

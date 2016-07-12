@@ -120,7 +120,7 @@ public class MainActivityFragment
         }
 
         // RecyclerView adapter setup
-        mMovieAdapter = new MovieAdapter(new ArrayList<Movie>());
+        mMovieAdapter = new MovieAdapter(getContext(), new ArrayList<Movie>());
         mMovieRecyclerView.setAdapter(mMovieAdapter);
 
         // Load the movie list data
