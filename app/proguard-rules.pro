@@ -21,3 +21,6 @@
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+
+# FragmentArgs
+-keep class com.hannesdorfmann.fragmentargs.** { *; }
