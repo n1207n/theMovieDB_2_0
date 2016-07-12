@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_margin="@dimen/dimen_list_card_item_margin">
 
     <ImageView
         android:id="@+id/image_view_movie_poster"

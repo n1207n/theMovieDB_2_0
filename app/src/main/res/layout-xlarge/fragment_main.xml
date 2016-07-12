@@ -17,7 +17,9 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dimen_list_horizontal_margin"
+        android:paddingRight="@dimen/dimen_list_horizontal_margin">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_movie_list"

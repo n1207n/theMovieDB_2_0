@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="dimen_poster_image_item_height">240dp</dimen>
+    <dimen name="dimen_list_horizontal_margin">0dp</dimen>
+    <dimen name="dimen_list_card_item_margin">1dp</dimen>
 </resources>

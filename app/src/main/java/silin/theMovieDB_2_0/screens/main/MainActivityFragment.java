@@ -1,6 +1,7 @@
 package silin.theMovieDB_2_0.screens.main;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -40,6 +41,9 @@ public class MainActivityFragment
 
     @Inject
     Context mContext;
+
+    @Inject
+    Configuration mConfiguration;
 
     @BindView(R.id.contentView)
     SwipeRefreshLayout mRefreshLayout;
@@ -108,7 +112,12 @@ public class MainActivityFragment
 
         // RecyclerView setup
         mMovieRecyclerView.setHasFixedSize(true);
-        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+
+        if (isTabletLandscapeMode()) {
+            mMovieRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+        } else {
+            mMovieRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        }
 
         // RecyclerView adapter setup
         mMovieAdapter = new MovieAdapter(new ArrayList<Movie>());
@@ -116,6 +125,10 @@ public class MainActivityFragment
 
         // Load the movie list data
         loadData(false);
+    }
+
+    private boolean isTabletLandscapeMode() {
+        return (mConfiguration.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE && mConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     /*
