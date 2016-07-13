@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_movie_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="silin.theMovieDB_2_0.screens.details.DetailsActivityFragment"
+    tools:showIn="@layout/fragment_details">
+
+    <TextView
+        android:id="@+id/movie_release_year_tv"
+        style="@style/TextAppearance.AppCompat.Display1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2015"
+        app:layout_constraintLeft_toLeftOf="@+id/layout_movie_details"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/layout_movie_details"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/movie_runtime_tv"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="120min"
+        app:layout_constraintLeft_toLeftOf="@+id/layout_movie_details"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/movie_release_year_tv"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/movie_rating_tv"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8.1/10"
+        app:layout_constraintLeft_toLeftOf="@+id/layout_movie_details"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/movie_runtime_tv"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/movie_overview_tv"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Every child comes into the world full of promise, and none more so than Chappie: he is gifted, special, a prodigy. Chappie he is a robot."
+        app:layout_constraintLeft_toLeftOf="@+id/layout_movie_details"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/movie_rating_tv"
+        android:layout_marginTop="64dp"
+        app:layout_constraintRight_toRightOf="@+id/layout_movie_details"
+        android:layout_marginEnd="16dp"
+        tools:layout_constraintRight_creator="1" />
+
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/movie_trailer_rv"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignStart="@+id/movie_overview_tv"-->
+    <!--android:layout_below="@+id/movie_overview_tv"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:minHeight="240dp"/>-->
+
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/movie_review_rv"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignStart="@+id/movie_overview_tv"-->
+    <!--android:layout_below="@+id/movie_trailer_rv"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:minHeight="240dp"/>-->
+
+</android.support.constraint.ConstraintLayout>

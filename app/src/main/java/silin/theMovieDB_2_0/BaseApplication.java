@@ -3,7 +3,6 @@ package silin.theMovieDB_2_0;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
-import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Singleton;
 
@@ -43,7 +42,7 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         Stetho.initializeWithDefaults(this);
-        LeakCanary.install(this);
+        // LeakCanary.install(this);
 
         sBaseApplication = this;
 
