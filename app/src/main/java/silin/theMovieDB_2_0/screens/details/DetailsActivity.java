@@ -3,10 +3,8 @@ package silin.theMovieDB_2_0.screens.details;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -66,7 +64,6 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void initializeViews() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(mMovie.title());
 
         mPicasso.load(mMovie.posterPathWidth342())
@@ -81,15 +78,5 @@ public class DetailsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

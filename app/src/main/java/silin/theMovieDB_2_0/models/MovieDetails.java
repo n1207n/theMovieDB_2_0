@@ -47,15 +47,15 @@ public abstract class MovieDetails implements Parcelable {
 
     public abstract double vote_average();
 
+    public abstract double budget();
+
+    public abstract double revenue();
+
+    public abstract double runtime();
+
     public abstract boolean adult();
 
     public abstract boolean video();
-
-    public abstract boolean budget();
-
-    public abstract boolean revenue();
-
-    public abstract boolean runtime();
 
     public abstract List<Genre> genres();
 
@@ -63,13 +63,12 @@ public abstract class MovieDetails implements Parcelable {
                                       String release_date, String original_title, String original_language,
                                       String title, String backdrop_path, String homepage, String imdb_id,
                                       String status, String tagline, double popularity, double vote_average,
-                                      boolean adult, boolean video, boolean budget, boolean revenue,
-                                      boolean runtime, List<Genre> genres) {
+                                      double budget, double revenue, double runtime, boolean adult, boolean video, List<Genre> genres) {
         return new AutoValue_MovieDetails(
                 id, vote_count, poster_path, overview, release_date,
                 original_title, original_language, title, backdrop_path, homepage, imdb_id,
-                status, tagline, popularity, vote_average, adult, video, budget, revenue,
-                runtime, genres
+                status, tagline, popularity, vote_average, budget, revenue,
+                runtime, adult, video, genres
         );
     }
 
