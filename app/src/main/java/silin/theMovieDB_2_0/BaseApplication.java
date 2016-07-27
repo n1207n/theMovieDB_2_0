@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import javax.inject.Singleton;
 
 import autodagger.AutoComponent;
@@ -42,6 +44,7 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         Stetho.initializeWithDefaults(this);
+        JodaTimeAndroid.init(this);
         // LeakCanary.install(this);
 
         sBaseApplication = this;

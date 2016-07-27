@@ -59,16 +59,28 @@ public abstract class MovieDetails implements Parcelable {
 
     public abstract List<Genre> genres();
 
+    public abstract Collection belongs_to_collection();
+
+    public abstract List<Company> production_companies();
+
+    public abstract List<Country> production_countries();
+
+    public abstract List<Language> spoken_languages();
+
     public static MovieDetails create(int id, int vote_count, String poster_path, String overview,
                                       String release_date, String original_title, String original_language,
                                       String title, String backdrop_path, String homepage, String imdb_id,
                                       String status, String tagline, double popularity, double vote_average,
-                                      double budget, double revenue, double runtime, boolean adult, boolean video, List<Genre> genres) {
+                                      double budget, double revenue, double runtime, boolean adult,
+                                      boolean video, List<Genre> genres, Collection collection,
+                                      List<Company> production_companies, List<Country> production_countries,
+                                      List<Language> spoken_languages) {
         return new AutoValue_MovieDetails(
                 id, vote_count, poster_path, overview, release_date,
                 original_title, original_language, title, backdrop_path, homepage, imdb_id,
                 status, tagline, popularity, vote_average, budget, revenue,
-                runtime, adult, video, genres
+                runtime, adult, video, genres, collection,
+                production_companies, production_countries, spoken_languages
         );
     }
 

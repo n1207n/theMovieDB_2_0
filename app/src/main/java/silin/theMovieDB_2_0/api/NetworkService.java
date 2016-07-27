@@ -37,7 +37,7 @@ public interface NetworkService {
      * api_key -- String
      */
     @GET("discover/movie?api_key=" + BuildConfig.API_BASE_KEY)
-    Observable<MovieList> getPopularMovieList(@Query("sort_by") String sorting);
+    Observable<MovieList> getPopularMovieList(@Query("primary_release_date.gte") String primary_release_date_start, @Query("primary_release_date.lte") String primary_release_date_end, @Query("sort_by") String sorting);
 
     /*
      * GET parameters:

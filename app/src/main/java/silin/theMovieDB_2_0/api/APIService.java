@@ -1,11 +1,15 @@
 package silin.theMovieDB_2_0.api;
 
+import org.joda.time.DateTime;
+
+import autodagger.AutoInjector;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import silin.theMovieDB_2_0.BaseApplication;
 import silin.theMovieDB_2_0.models.MovieDetails;
 import silin.theMovieDB_2_0.models.MovieList;
 import silin.theMovieDB_2_0.models.MovieReviewList;
@@ -16,16 +20,21 @@ import silin.theMovieDB_2_0.models.MovieTrailerList;
  *
  * Credit goes to https://github.com/ennur/Clean-Android-Code! Thanks!
  */
-
+@AutoInjector(BaseApplication.class)
 public class APIService {
     private final NetworkService networkService;
 
     public APIService(NetworkService networkService) {
+        BaseApplication.sharedApplication().getComponentApplication().inject(this);
         this.networkService = networkService;
     }
 
     public Subscription getPopularMovieList(final GetPopularMovieListCallback callback) {
-        return networkService.getPopularMovieList("popularity.desc")
+
+        DateTime endDateTime = new DateTime(),
+                startDateTime = endDateTime.minusMonths(2);
+
+        return networkService.getPopularMovieList(startDateTime.toString("yyyy-MM-dd"), endDateTime.toString("yyyy-MM-dd"), "popularity.desc")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorResumeNext(new Func1<Throwable, Observable<? extends MovieList>>() {
