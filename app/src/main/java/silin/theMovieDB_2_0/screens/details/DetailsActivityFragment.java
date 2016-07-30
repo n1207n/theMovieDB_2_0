@@ -137,7 +137,7 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
         mMovieDetails.revenue();
         mMovieDetails.status();
         mMovieDetails.tagline();
-        mMovieDetails.belongs_to_collection();
+        // mMovieDetails.belongs_to_collection();
     }
 
     @Override
