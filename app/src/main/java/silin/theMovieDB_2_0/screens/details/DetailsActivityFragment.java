@@ -20,6 +20,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import silin.theMovieDB_2_0.BaseApplication;
 import silin.theMovieDB_2_0.R;
+import silin.theMovieDB_2_0.models.Company;
+import silin.theMovieDB_2_0.models.Country;
+import silin.theMovieDB_2_0.models.Genre;
+import silin.theMovieDB_2_0.models.Language;
 import silin.theMovieDB_2_0.models.Movie;
 import silin.theMovieDB_2_0.models.MovieDetails;
 
@@ -35,17 +39,26 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
     private MovieDetails mMovieDetails;
 
-    @BindView(R.id.movie_release_year_tv)
-    TextView mReleaseYearTextView;
+    @BindView(R.id.popularity_value)
+    TextView mPopularityTextView;
 
-    @BindView(R.id.movie_runtime_tv)
-    TextView mRuntimeTextView;
+    @BindView(R.id.vote_rating_value)
+    TextView mVoteRatingTextView;
 
-    @BindView(R.id.movie_rating_tv)
-    TextView mRatingTextView;
+    @BindView(R.id.overview_value)
+    TextView mOverviewTextView;
 
-    @BindView(R.id.movie_overview_tv)
-    TextView mOverViewTextView;
+    @BindView(R.id.genre_value)
+    TextView mGenreTextView;
+
+    @BindView(R.id.language_value)
+    TextView mLanguageTextView;
+
+    @BindView(R.id.company_value)
+    TextView mCompanyTextView;
+
+    @BindView(R.id.country_value)
+    TextView mCountryTextView;
 
     @BindView(R.id.content_movie_scroll_view)
     NestedScrollView mScrollView;
@@ -93,10 +106,38 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
     @Override
     public void showContent() {
-        mReleaseYearTextView.setText(mMovieDetails.release_date());
-        mRuntimeTextView.setText(getActivity().getResources().getString(R.string.movie_runtime_format, String.valueOf(mMovieDetails.runtime())));
-        mRatingTextView.setText(getActivity().getResources().getString(R.string.movie_rating_format, String.valueOf(mMovieDetails.vote_average())));
-        mOverViewTextView.setText(mMovieDetails.overview());
+        mPopularityTextView.setText(getActivity().getResources().getString(R.string.movie_popularity_format, mMovieDetails.popularity()));
+        mVoteRatingTextView.setText(getActivity().getResources().getString(R.string.movie_rating_format, mMovieDetails.vote_average()));
+        mOverviewTextView.setText(mMovieDetails.overview());
+
+        String genreString = "| ", languageStrings = "| ", companyStrings = "| ", countryStrings = "| ";
+
+        for (Genre genre : mMovieDetails.genres()) {
+            genreString += genre.name() + " | ";
+        }
+
+        for (Language language : mMovieDetails.spoken_languages()) {
+            languageStrings += language.name() + " | ";
+        }
+
+        for (Company company : mMovieDetails.production_companies()) {
+            companyStrings += company.name() + " | ";
+        }
+
+        for (Country country : mMovieDetails.production_countries()) {
+            countryStrings += country.name() + " | ";
+        }
+
+        mGenreTextView.setText(genreString);
+        mLanguageTextView.setText(languageStrings);
+        mCompanyTextView.setText(companyStrings);
+        mCountryTextView.setText(countryStrings);
+        mMovieDetails.imdbPath();
+        mMovieDetails.homepage();
+        mMovieDetails.revenue();
+        mMovieDetails.status();
+        mMovieDetails.tagline();
+        mMovieDetails.belongs_to_collection();
     }
 
     @Override

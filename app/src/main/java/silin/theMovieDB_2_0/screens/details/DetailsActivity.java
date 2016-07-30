@@ -65,6 +65,7 @@ public class DetailsActivity extends AppCompatActivity {
     private void initializeViews() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(mMovie.title());
+        getSupportActionBar().setSubtitle(mMovie.release_date().split("-")[0]);
 
         mPicasso.load(mMovie.posterPathWidth342())
                 .fit()
