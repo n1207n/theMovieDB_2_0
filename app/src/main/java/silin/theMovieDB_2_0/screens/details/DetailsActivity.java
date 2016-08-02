@@ -15,9 +15,19 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.palaima.debugdrawer.DebugDrawer;
+import io.palaima.debugdrawer.commons.BuildModule;
+import io.palaima.debugdrawer.commons.DeviceModule;
+import io.palaima.debugdrawer.commons.NetworkModule;
+import io.palaima.debugdrawer.commons.SettingsModule;
+import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
+import io.palaima.debugdrawer.picasso.PicassoModule;
+import io.palaima.debugdrawer.scalpel.ScalpelModule;
+import okhttp3.OkHttpClient;
 import se.emilsjolander.intentbuilder.Extra;
 import se.emilsjolander.intentbuilder.IntentBuilder;
 import silin.theMovieDB_2_0.BaseApplication;
+import silin.theMovieDB_2_0.BuildConfig;
 import silin.theMovieDB_2_0.R;
 import silin.theMovieDB_2_0.models.Movie;
 
@@ -27,6 +37,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     @Extra
     Movie mMovie;
+
+    @Inject
+    OkHttpClient mClient;
 
     @Inject
     Picasso mPicasso;
@@ -39,6 +52,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.bar_image_background)
     ImageView mBarImageView;
+
+    private DebugDrawer debugDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +75,10 @@ public class DetailsActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, fragment)
                     .commit();
         }
+
+        if (BuildConfig.FLAVOR.equals("dev")) {
+            buildDebugDrawer();
+        }
     }
 
     private void initializeViews() {
@@ -78,5 +97,42 @@ public class DetailsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void buildDebugDrawer() {
+        debugDrawer = new DebugDrawer.Builder(this)
+                .modules(
+                        new ScalpelModule(this),
+                        new OkHttp3Module(mClient),
+                        new PicassoModule(mPicasso),
+                        new DeviceModule(this),
+                        new BuildModule(this),
+                        new NetworkModule(this),
+                        new SettingsModule(this)
+                ).build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        debugDrawer.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        debugDrawer.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        debugDrawer.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        debugDrawer.onStop();
     }
 }
