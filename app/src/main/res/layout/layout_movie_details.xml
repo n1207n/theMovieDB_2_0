@@ -32,8 +32,8 @@
                     android:id="@+id/popularity_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/popularity_label"
                     android:gravity="center"
+                    android:text="@string/popularity_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                 <TextView
@@ -65,8 +65,8 @@
                     android:id="@+id/vote_rating_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/vote_rating_label"
                     android:gravity="center"
+                    android:text="@string/vote_rating_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
 
@@ -88,42 +88,92 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/card_layout"
-        android:layout_marginBottom="47dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-    <TextView
-        android:id="@+id/genre_value"
+    <android.support.v7.widget.CardView
+        android:id="@+id/movie_info_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/overview_value"
-        android:layout_marginStart="16dp" />
+        android:layout_margin="16dp"
+        app:contentPadding="16dp">
 
-    <TextView
-        android:id="@+id/language_value"
+        <RelativeLayout
+            android:id="@+id/movie_info_card_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/genre_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp" />
+
+            <TextView
+                android:id="@+id/language_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/genre_value"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/company_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/language_value"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/country_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/company_value"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/movie_link_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/genre_value"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@+id/movie_info_card"
+        android:layout_margin="16dp"
+        app:contentPadding="16dp">
 
-    <TextView
-        android:id="@+id/company_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/language_value"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+        <LinearLayout
+            android:id="@+id/movie_link_card_content"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/country_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/company_value"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+            <Button
+                android:id="@+id/imdb_btn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/imdb" />
+
+            <Button
+                android:id="@+id/homepage_btn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/homepage_btn" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>

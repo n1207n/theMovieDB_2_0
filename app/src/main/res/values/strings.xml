@@ -7,4 +7,6 @@
     <string name="movie_runtime_format">%1$d min</string>
     <string name="popularity_label">Popularity</string>
     <string name="vote_rating_label">Rating</string>
+    <string name="imdb">Go to IMDb link</string>
+    <string name="homepage_btn">Go to Homepage</string>
 </resources>

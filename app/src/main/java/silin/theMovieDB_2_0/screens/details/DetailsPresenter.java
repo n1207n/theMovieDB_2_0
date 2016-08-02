@@ -21,10 +21,67 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
     APIService apiService;
 
     private CompositeSubscription mCompositeSubscription;
+    private MovieDetails mMovieDetails;
 
     DetailsPresenter() {
         BaseApplication.sharedApplication().getComponentApplication().inject(this);
         mCompositeSubscription = new CompositeSubscription();
+    }
+
+    String returnStringForGenreList() {
+        String genreString = "Genres: ";
+
+        for (int i = 0; i < mMovieDetails.genres().size(); i++) {
+            if (i != mMovieDetails.genres().size() - 1) {
+                genreString += mMovieDetails.genres().get(i).name() + " | ";
+            } else {
+                genreString += mMovieDetails.genres().get(i).name();
+            }
+        }
+
+        return genreString;
+    }
+
+    String returnStringForLanguageList() {
+        String languageString = "Languages: ";
+
+        for (int i = 0; i < mMovieDetails.spoken_languages().size(); i++) {
+            if (i != mMovieDetails.spoken_languages().size() - 1) {
+                languageString += mMovieDetails.spoken_languages().get(i).name() + " | ";
+            } else {
+                languageString += mMovieDetails.spoken_languages().get(i).name();
+            }
+        }
+
+        return languageString;
+    }
+
+    String returnStringForCompanyList() {
+        String companyString = "Production companies: ";
+
+        for (int i = 0; i < mMovieDetails.production_companies().size(); i++) {
+            if (i != mMovieDetails.production_companies().size() - 1) {
+                companyString += mMovieDetails.production_companies().get(i).name() + " | ";
+            } else {
+                companyString += mMovieDetails.production_companies().get(i).name();
+            }
+        }
+
+        return companyString;
+    }
+
+    String returnStringForCountryList() {
+        String countryString = "Production countries: ";
+
+        for (int i = 0; i < mMovieDetails.production_countries().size(); i++) {
+            if (i != mMovieDetails.production_countries().size() - 1) {
+                countryString += mMovieDetails.production_countries().get(i).name() + " | ";
+            } else {
+                countryString += mMovieDetails.production_countries().get(i).name();
+            }
+        }
+
+        return countryString;
     }
 
     void showMovieDetails(String movie_id) {
@@ -32,7 +89,8 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
             Subscription detailsSubscription = apiService.getMovieDetails(movie_id, new APIService.GetMovieDetailsCallback() {
                 @Override
                 public void onSuccess(MovieDetails movieDetails) {
-                    getView().setData(movieDetails);
+                    DetailsPresenter.this.mMovieDetails = movieDetails;
+                    getView().setData(DetailsPresenter.this.mMovieDetails);
                     getView().showContent();
                 }
 

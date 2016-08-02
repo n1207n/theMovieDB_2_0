@@ -1,5 +1,7 @@
 package silin.theMovieDB_2_0.screens.details;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +10,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
@@ -20,10 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import silin.theMovieDB_2_0.BaseApplication;
 import silin.theMovieDB_2_0.R;
-import silin.theMovieDB_2_0.models.Company;
-import silin.theMovieDB_2_0.models.Country;
-import silin.theMovieDB_2_0.models.Genre;
-import silin.theMovieDB_2_0.models.Language;
 import silin.theMovieDB_2_0.models.Movie;
 import silin.theMovieDB_2_0.models.MovieDetails;
 
@@ -59,6 +58,12 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
     @BindView(R.id.country_value)
     TextView mCountryTextView;
+
+    @BindView(R.id.imdb_btn)
+    Button mImdbButton;
+
+    @BindView(R.id.homepage_btn)
+    Button mHomepageButton;
 
     @BindView(R.id.content_movie_scroll_view)
     NestedScrollView mScrollView;
@@ -109,40 +114,36 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
         mPopularityTextView.setText(getActivity().getResources().getString(R.string.movie_popularity_format, mMovieDetails.popularity()));
         mVoteRatingTextView.setText(getActivity().getResources().getString(R.string.movie_rating_format, mMovieDetails.vote_average()));
         mOverviewTextView.setText(mMovieDetails.overview());
+        mGenreTextView.setText(presenter.returnStringForGenreList());
+        mLanguageTextView.setText(presenter.returnStringForLanguageList());
+        mCompanyTextView.setText(presenter.returnStringForCompanyList());
+        mCountryTextView.setText(presenter.returnStringForCountryList());
+        mImdbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mMovieDetails.imdbPath())));
+            }
+        });
 
-        String genreString = "| ", languageStrings = "| ", companyStrings = "| ", countryStrings = "| ";
+        mHomepageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mMovieDetails.homepage().equals("")) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mMovieDetails.homepage())));
+                } else {
+                    Snackbar.make(mScrollView, "There is no homepage yet. Sorry!", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        for (Genre genre : mMovieDetails.genres()) {
-            genreString += genre.name() + " | ";
-        }
-
-        for (Language language : mMovieDetails.spoken_languages()) {
-            languageStrings += language.name() + " | ";
-        }
-
-        for (Company company : mMovieDetails.production_companies()) {
-            companyStrings += company.name() + " | ";
-        }
-
-        for (Country country : mMovieDetails.production_countries()) {
-            countryStrings += country.name() + " | ";
-        }
-
-        mGenreTextView.setText(genreString);
-        mLanguageTextView.setText(languageStrings);
-        mCompanyTextView.setText(companyStrings);
-        mCountryTextView.setText(countryStrings);
-        mMovieDetails.imdbPath();
-        mMovieDetails.homepage();
         mMovieDetails.revenue();
         mMovieDetails.status();
         mMovieDetails.tagline();
-        // mMovieDetails.belongs_to_collection();
     }
 
     @Override
     public void showError(Throwable e) {
-        Snackbar.make(mScrollView, "Failed to load movie details", Snackbar.LENGTH_LONG)
+        Snackbar.make(mScrollView, String.format("Failed to load movie details: %s", e.getMessage()), Snackbar.LENGTH_LONG)
                 .setAction("Reload", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

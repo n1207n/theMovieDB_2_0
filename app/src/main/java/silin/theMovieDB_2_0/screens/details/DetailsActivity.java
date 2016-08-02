@@ -68,7 +68,6 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setSubtitle(mMovie.release_date().split("-")[0]);
 
         mPicasso.load(mMovie.posterPathWidth342())
-                .fit()
                 .noPlaceholder()
                 .into(mBarImageView);
 
