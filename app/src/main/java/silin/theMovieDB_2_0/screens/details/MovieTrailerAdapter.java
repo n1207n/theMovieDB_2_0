@@ -24,11 +24,13 @@ import silin.theMovieDB_2_0.models.MovieTrailer;
  * Created on 8/2/16: theMovieDB_2_0 by @n1207n
  */
 @AutoInjector(BaseApplication.class)
-public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapter.MovieTrailerViewHolder> {
+public class MovieTrailerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context mContext;
 
     private ArrayList<MovieTrailer> mMovieTrailerList;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
 
     MovieTrailerAdapter(Context context, ArrayList<MovieTrailer> movieTrailers) {
         mContext = context;
@@ -45,7 +47,7 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapte
      * layout file.
      * <p/>
      * The new ViewHolder will be used to display items of the adapter using
-     * {@link #onBindViewHolder(MovieTrailerViewHolder, int)}. Since it will be re-used to display
+     * {@link #onBindViewHolder(android.support.v7.widget.RecyclerView.ViewHolder, int)}. Since it will be re-used to display
      * different items in the data set, it is a good idea to cache references to sub views of
      * the View to avoid unnecessary {@link View#findViewById(int)} calls.
      *
@@ -54,14 +56,25 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapte
      * @param viewType The view type of the new View.
      * @return A new ViewHolder that holds a View of the given view type.
      * @see #getItemViewType(int)
-     * @see #onBindViewHolder(MovieTrailerViewHolder, int)
+     * @see #onBindViewHolder(android.support.v7.widget.RecyclerView.ViewHolder, int)
      */
     @Override
-    public MovieTrailerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView view = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_view_movie_trailer_list_item, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder = null;
 
-        return new MovieTrailerViewHolder(view);
+        if (viewType == TYPE_HEADER) {
+            TextView view = (TextView) LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.movie_trailer_list_header, parent, false);
+
+            viewHolder = new MovieTrailerHeaderViewHolder(view);
+        } else if (viewType == TYPE_ITEM) {
+            CardView view = (CardView) LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_view_movie_trailer_list_item, parent, false);
+
+            viewHolder = new MovieTrailerViewHolder(view);
+        }
+
+        return viewHolder;
     }
 
 
@@ -84,16 +97,18 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapte
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(final MovieTrailerViewHolder holder, final int position) {
-        final MovieTrailer movieTrailer = mMovieTrailerList.get(position);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        if (holder.getItemViewType() == TYPE_ITEM) {
+            final MovieTrailer movieTrailer = mMovieTrailerList.get(position);
 
-        holder.mTrailerTextView.setText(String.format("%s - %s - %sp", movieTrailer.name(), movieTrailer.type(), movieTrailer.size()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(movieTrailer.getTrailerUrl())));
-            }
-        });
+            ((MovieTrailerViewHolder) holder).mTrailerTextView.setText(String.format("%s - %s - %sp", movieTrailer.name(), movieTrailer.type(), movieTrailer.size()));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(movieTrailer.getTrailerUrl())));
+                }
+            });
+        }
     }
 
     /**
@@ -104,6 +119,11 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapte
     @Override
     public int getItemCount() {
         return mMovieTrailerList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? TYPE_HEADER : TYPE_ITEM;
     }
 
     void updateData(ArrayList<MovieTrailer> newList) {
@@ -124,6 +144,13 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerAdapte
         MovieTrailerViewHolder(CardView itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class MovieTrailerHeaderViewHolder extends RecyclerView.ViewHolder {
+
+        MovieTrailerHeaderViewHolder(TextView itemView) {
+            super(itemView);
         }
     }
 }

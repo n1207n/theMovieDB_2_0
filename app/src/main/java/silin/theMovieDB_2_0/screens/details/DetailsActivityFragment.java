@@ -125,8 +125,8 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
     @Override
     public void showContent() {
-        mPopularityTextView.setText(getActivity().getResources().getString(R.string.movie_popularity_format, mMovieDetails.popularity()));
-        mVoteRatingTextView.setText(getActivity().getResources().getString(R.string.movie_rating_format, mMovieDetails.vote_average()));
+        mPopularityTextView.setText(String.valueOf(mMovieDetails.popularity()));
+        mVoteRatingTextView.setText(String.valueOf(mMovieDetails.vote_average()));
         mOverviewTextView.setText(mMovieDetails.overview());
         mGenreTextView.setText(presenter.returnStringForGenreList());
         mLanguageTextView.setText(presenter.returnStringForLanguageList());
