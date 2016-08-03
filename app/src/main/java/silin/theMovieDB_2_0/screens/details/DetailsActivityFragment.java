@@ -168,8 +168,9 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
         if (mMovieTrailerAdapter == null) {
             mMovieTrailerAdapter = new MovieTrailerAdapter(getContext(), new ArrayList<MovieTrailer>());
-            mTrailerRecyclerView.setAdapter(mMovieTrailerAdapter);
         }
+
+        mTrailerRecyclerView.setAdapter(mMovieTrailerAdapter);
     }
 
     @Override
