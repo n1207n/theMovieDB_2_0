@@ -16,7 +16,9 @@ public abstract class MovieTrailer implements Parcelable {
 
     public abstract String id();
 
-    public abstract String iso639_1();
+    public abstract String iso_639_1();
+
+    public abstract String iso_3166_1();
 
     public abstract String key();
 
@@ -28,9 +30,9 @@ public abstract class MovieTrailer implements Parcelable {
 
     public abstract String type();
 
-    public static MovieTrailer create(String id, String iso639_1, String key, String name,
+    public static MovieTrailer create(String id, String iso_639_1, String iso_3166_1, String key, String name,
                                       String site, String size, String type) {
-        return new AutoValue_MovieTrailer(id, iso639_1, key, name, site, size, type);
+        return new AutoValue_MovieTrailer(id, iso_639_1, iso_3166_1, key, name, site, size, type);
     }
 
     /*

@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
+import java.util.ArrayList;
+
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +29,8 @@ import silin.theMovieDB_2_0.BaseApplication;
 import silin.theMovieDB_2_0.R;
 import silin.theMovieDB_2_0.models.Movie;
 import silin.theMovieDB_2_0.models.MovieDetails;
+import silin.theMovieDB_2_0.models.MovieTrailer;
+import silin.theMovieDB_2_0.models.MovieTrailerList;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,6 +43,10 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
     Movie mMovie;
 
     private MovieDetails mMovieDetails;
+
+    private MovieTrailerList mMovieTrailerData;
+
+    private MovieTrailerAdapter mMovieTrailerAdapter;
 
     @BindView(R.id.popularity_value)
     TextView mPopularityTextView;
@@ -64,6 +74,9 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
     @BindView(R.id.homepage_btn)
     Button mHomepageButton;
+
+    @BindView(R.id.movie_trailer_list)
+    RecyclerView mTrailerRecyclerView;
 
     @BindView(R.id.content_movie_scroll_view)
     NestedScrollView mScrollView;
@@ -102,6 +115,7 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
     private void loadMovieDetails() {
         presenter.showMovieDetails(String.valueOf(mMovie.id()));
+        presenter.showMovieTrailerDetails(String.valueOf(mMovie.id()));
     }
 
     @Override
@@ -139,6 +153,23 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
         mMovieDetails.revenue();
         mMovieDetails.status();
         mMovieDetails.tagline();
+    }
+
+    @Override
+    public void setTrailerData(MovieTrailerList trailerData) {
+        mMovieTrailerData = trailerData;
+        mMovieTrailerAdapter.updateData((ArrayList<MovieTrailer>) mMovieTrailerData.results());
+    }
+
+    @Override
+    public void setTrailerRecyclerView() {
+        mTrailerRecyclerView.setHasFixedSize(true);
+        mTrailerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        if (mMovieTrailerAdapter == null) {
+            mMovieTrailerAdapter = new MovieTrailerAdapter(getContext(), new ArrayList<MovieTrailer>());
+            mTrailerRecyclerView.setAdapter(mMovieTrailerAdapter);
+        }
     }
 
     @Override

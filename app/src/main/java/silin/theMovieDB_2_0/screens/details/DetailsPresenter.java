@@ -11,6 +11,7 @@ import silin.theMovieDB_2_0.BaseApplication;
 import silin.theMovieDB_2_0.api.APIService;
 import silin.theMovieDB_2_0.api.NetworkException;
 import silin.theMovieDB_2_0.models.MovieDetails;
+import silin.theMovieDB_2_0.models.MovieTrailerList;
 
 /**
  * Created on 7/11/16: theMovieDB_2_0 by @n1207n
@@ -22,6 +23,7 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
 
     private CompositeSubscription mCompositeSubscription;
     private MovieDetails mMovieDetails;
+    private MovieTrailerList mMovieTrailerList;
 
     DetailsPresenter() {
         BaseApplication.sharedApplication().getComponentApplication().inject(this);
@@ -102,6 +104,25 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
 
             mCompositeSubscription.add(detailsSubscription);
         }
+    }
+
+    void showMovieTrailerDetails(String movie_id) {
+        Subscription trailerSubscription = apiService.getMovieTrailers(movie_id, new APIService.GetMovieTrailerListCallback() {
+
+            @Override
+            public void onSuccess(MovieTrailerList movieTrailerList) {
+                DetailsPresenter.this.mMovieTrailerList = movieTrailerList;
+                getView().setTrailerRecyclerView();
+                getView().setTrailerData(DetailsPresenter.this.mMovieTrailerList);
+            }
+
+            @Override
+            public void onError(NetworkException exception) {
+                getView().showError(exception);
+            }
+        });
+
+        mCompositeSubscription.add(trailerSubscription);
     }
 
     void onStop() {
