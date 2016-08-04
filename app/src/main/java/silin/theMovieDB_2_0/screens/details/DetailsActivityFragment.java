@@ -52,22 +52,13 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
     TextView mPopularityTextView;
 
     @BindView(R.id.vote_rating_value)
-    TextView mVoteRatingTextView;
+    TextView mRatingTextView;
+
+    @BindView(R.id.movie_info_value)
+    TextView mInfoTextView;
 
     @BindView(R.id.overview_value)
     TextView mOverviewTextView;
-
-    @BindView(R.id.genre_value)
-    TextView mGenreTextView;
-
-    @BindView(R.id.language_value)
-    TextView mLanguageTextView;
-
-    @BindView(R.id.company_value)
-    TextView mCompanyTextView;
-
-    @BindView(R.id.country_value)
-    TextView mCountryTextView;
 
     @BindView(R.id.imdb_btn)
     Button mImdbButton;
@@ -125,13 +116,10 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
 
     @Override
     public void showContent() {
-        mPopularityTextView.setText(String.valueOf(mMovieDetails.popularity()));
-        mVoteRatingTextView.setText(String.valueOf(mMovieDetails.vote_average()));
+        mPopularityTextView.setText(presenter.getPopularityString());
+        mRatingTextView.setText(presenter.getRatingString());
+        mInfoTextView.setText(presenter.getMovieInfoString());
         mOverviewTextView.setText(mMovieDetails.overview());
-        mGenreTextView.setText(presenter.returnStringForGenreList());
-        mLanguageTextView.setText(presenter.returnStringForLanguageList());
-        mCompanyTextView.setText(presenter.returnStringForCompanyList());
-        mCountryTextView.setText(presenter.returnStringForCountryList());
         mImdbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,10 +137,6 @@ public class DetailsActivityFragment extends MvpFragment<DetailsView, DetailsPre
                 }
             }
         });
-
-        mMovieDetails.revenue();
-        mMovieDetails.status();
-        mMovieDetails.tagline();
     }
 
     @Override

@@ -2,6 +2,8 @@ package silin.theMovieDB_2_0.screens.details;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
+import java.text.NumberFormat;
+
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
@@ -30,7 +32,7 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
         mCompositeSubscription = new CompositeSubscription();
     }
 
-    String returnStringForGenreList() {
+    private String getStringForGenreList() {
         String genreString = "Genres: ";
 
         for (int i = 0; i < mMovieDetails.genres().size(); i++) {
@@ -44,7 +46,7 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
         return genreString;
     }
 
-    String returnStringForLanguageList() {
+    private String getStringForLanguageList() {
         String languageString = "Languages: ";
 
         for (int i = 0; i < mMovieDetails.spoken_languages().size(); i++) {
@@ -58,7 +60,7 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
         return languageString;
     }
 
-    String returnStringForCompanyList() {
+    private String getStringForCompanyList() {
         String companyString = "Production companies: ";
 
         for (int i = 0; i < mMovieDetails.production_companies().size(); i++) {
@@ -72,7 +74,7 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
         return companyString;
     }
 
-    String returnStringForCountryList() {
+    private String getStringForCountryList() {
         String countryString = "Production countries: ";
 
         for (int i = 0; i < mMovieDetails.production_countries().size(); i++) {
@@ -84,6 +86,29 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
         }
 
         return countryString;
+    }
+
+    String getMovieInfoString() {
+
+        return "Runtime: " +
+                ((int) mMovieDetails.runtime()) +
+                " min\n\n" +
+                this.getStringForGenreList() +
+                "\n\n" +
+                this.getStringForLanguageList() +
+                "\n\n" +
+                this.getStringForCompanyList() +
+                "\n\n" +
+                this.getStringForCountryList() +
+                "\n\n" +
+                "Status: " +
+                mMovieDetails.status() +
+                "\n\n" +
+                "Budget: " +
+                NumberFormat.getCurrencyInstance().format(mMovieDetails.budget()) +
+                "\n\n" +
+                "Revenue: " +
+                NumberFormat.getCurrencyInstance().format(mMovieDetails.revenue());
     }
 
     void showMovieDetails(String movie_id) {
@@ -129,5 +154,13 @@ public class DetailsPresenter extends MvpBasePresenter<DetailsView> {
         if (!mCompositeSubscription.isUnsubscribed()) {
             mCompositeSubscription.unsubscribe();
         }
+    }
+
+    String getPopularityString() {
+        return NumberFormat.getInstance().format(this.mMovieDetails.popularity());
+    }
+
+    String getRatingString() {
+        return NumberFormat.getInstance().format(this.mMovieDetails.vote_average());
     }
 }
